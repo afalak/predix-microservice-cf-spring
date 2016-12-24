@@ -44,6 +44,16 @@ public class HelloController
      * @return -
      */
     @SuppressWarnings("nls")
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello()
+    {
+        return String.format("Hi");
+    }
+
+    /**
+     * @return -
+     */
+    @SuppressWarnings("nls")
     @RequestMapping(value = "/health", method = RequestMethod.GET)
     public String health()
     {

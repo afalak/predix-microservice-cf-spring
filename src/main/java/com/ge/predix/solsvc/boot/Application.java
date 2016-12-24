@@ -163,9 +163,10 @@ public class Application
 
     private Predicate<String> paths()
     {
-        return or(regex("/echo/*"), //$NON-NLS-1$
-                regex("/health")); //$NON-NLS-1$
-        // regex("/info")); //$NON-NLS-1$
+        return  or(regex("/echo/*"), //$NON-NLS-1$
+                regex("/hello/*"), //$NON-NLS-1$
+                regex("/health"), //$NON-NLS-1$
+                regex("/info")); //$NON-NLS-1$
     }
 
     /**
@@ -201,7 +202,7 @@ public class Application
     {
         return new ApiInfoBuilder().title("Predix Microservice") //$NON-NLS-1$
                 .description("Template for predix micro service") //$NON-NLS-1$
-                .version("1.1.6") //$NON-NLS-1$
+                .version("1.1.7") //$NON-NLS-1$
                 .build();
     }
 
