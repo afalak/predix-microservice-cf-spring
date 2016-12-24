@@ -82,10 +82,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author predix
  */
 @EnableAutoConfiguration(exclude =
-{
-        // Add any configuration loading call you want to exclude
+        {
+            // Add any configuration loading call you want to exclude
 
-})
+        })
 @PropertySource("classpath:application-default.properties")
 @ComponentScan(basePackages = "com.ge.predix.solsvc")
 @EnableSwagger2
@@ -93,11 +93,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Application
 {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
-    
+
     @SuppressWarnings("javadoc")
     @Value("${spring.profiles.active:local}")
     String profile ;
-    
+
     @SuppressWarnings("javadoc")
     @Value("${java.docs.url:null}")
     String docsUrl ;
@@ -131,7 +131,7 @@ public class Application
 
         log.debug("Let's inspect the properties provided by Spring Boot:"); //$NON-NLS-1$
         MutablePropertySources propertySources = ((StandardServletEnvironment) ctx.getEnvironment())
-                .getPropertySources();
+            .getPropertySources();
         Iterator<org.springframework.core.env.PropertySource<?>> iterator = propertySources.iterator();
         while (iterator.hasNext())
         {
@@ -152,8 +152,8 @@ public class Application
     public Docket documentation()
     {
         return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).paths(paths())
-                .build().pathMapping("/") //$NON-NLS-1$
-                .apiInfo(metadata());
+            .build().pathMapping("/") //$NON-NLS-1$
+            .apiInfo(metadata());
     }
 
     /**
@@ -180,10 +180,10 @@ public class Application
                 "alpha", // apiSorter => alpha //$NON-NLS-1$
                 "schema", // defaultModelRendering => schema //$NON-NLS-1$
                 UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS, true, // enableJsonEditor
-                                                                        // =>
-                                                                        // true
-                                                                        // |
-                                                                        // false
+                // =>
+                // true
+                // |
+                // false
                 true); // showRequestHeaders => true | false
     }
 
@@ -201,9 +201,9 @@ public class Application
     private ApiInfo metadata()
     {
         return new ApiInfoBuilder().title("Predix Microservice") //$NON-NLS-1$
-                .description("Template for predix micro service") //$NON-NLS-1$
-                .version("1.1.7") //$NON-NLS-1$
-                .build();
+            .description("Template for predix micro service") //$NON-NLS-1$
+            .version("1.1.7") //$NON-NLS-1$
+            .build();
     }
 
     /**
@@ -238,38 +238,38 @@ public class Application
      */
     @RequestMapping("/docs")
     protected ModelAndView docs(HttpServletRequest request, HttpServletResponse response)
-            throws Exception
-    {
-        return new ModelAndView("redirect:/javadoc/index.html"); //$NON-NLS-1$
+    throws Exception
+{
+    return new ModelAndView("redirect:/javadoc/index.html"); //$NON-NLS-1$
 
-    }
-    
-    
-    /**
-     * @param request -
-     * @param response -
-     * @throws IOException -
-     */
-    @RequestMapping("/api")
-    public @ResponseBody void api(HttpServletRequest request ,HttpServletResponse response ) throws IOException
-    {   String applicationURl = getApplicationUrl(request);
-        response.sendRedirect(applicationURl.replace("/api", "/swagger-ui.html")); //$NON-NLS-1$//$NON-NLS-2$
+}
 
+
+/**
+ * @param request -
+ * @param response -
+ * @throws IOException -
+ */
+@RequestMapping("/api")
+public @ResponseBody void api(HttpServletRequest request ,HttpServletResponse response ) throws IOException
+{   String applicationURl = getApplicationUrl(request);
+    response.sendRedirect(applicationURl.replace("/api", "/swagger-ui.html")); //$NON-NLS-1$//$NON-NLS-2$
+
+}
+
+/**
+ * 
+ * @param request
+ * @return - Application URL
+ */
+private String getApplicationUrl (final HttpServletRequest request){
+
+    String applicationURl = request.getRequestURL().toString().replaceAll("http", "https");//$NON-NLS-1$ //$NON-NLS-2$ 
+    if("local".equalsIgnoreCase(this.profile)) { //$NON-NLS-1$
+        applicationURl = request.getRequestURL().toString(); // localhost support for http
     }
-    
-    /**
-     * 
-     * @param request
-     * @return - Application URL
-     */
-    private String getApplicationUrl (final HttpServletRequest request){
-   
-        String applicationURl = request.getRequestURL().toString().replaceAll("http", "https");//$NON-NLS-1$ //$NON-NLS-2$ 
-        if("local".equalsIgnoreCase(this.profile)) { //$NON-NLS-1$
-            applicationURl = request.getRequestURL().toString(); // localhost support for http
-        }
-        return applicationURl;
-    }
-    
+    return applicationURl;
+}
+
 
 }
