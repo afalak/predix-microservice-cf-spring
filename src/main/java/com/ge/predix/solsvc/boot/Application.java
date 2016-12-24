@@ -129,7 +129,7 @@ public class Application
         for (int i = 0; i < profiles.length; i++)
             log.debug("profile=" + profiles[i]); //$NON-NLS-1$
 
-        log.info("Let's inspect the properties provided by Spring Boot:"); //$NON-NLS-1$
+        log.debug("Let's inspect the properties provided by Spring Boot:"); //$NON-NLS-1$
         MutablePropertySources propertySources = ((StandardServletEnvironment) ctx.getEnvironment())
                 .getPropertySources();
         Iterator<org.springframework.core.env.PropertySource<?>> iterator = propertySources.iterator();
@@ -139,7 +139,7 @@ public class Application
             if ( propertySourceObject instanceof org.springframework.core.env.PropertySource )
             {
                 org.springframework.core.env.PropertySource<?> propertySource = (org.springframework.core.env.PropertySource<?>) propertySourceObject;
-                log.info("propertySource=" + propertySource.getName() + " values=" + propertySource.getSource() //$NON-NLS-1$ //$NON-NLS-2$
+                log.debug("propertySource=" + propertySource.getName() + " values=" + propertySource.getSource() //$NON-NLS-1$ //$NON-NLS-2$
                         + "class=" + propertySource.getClass()); //$NON-NLS-1$
             }
         }

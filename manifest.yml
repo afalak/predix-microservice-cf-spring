@@ -1,10 +1,14 @@
 ---
 applications:
-  - name: predix-microservice-cf-spring
-    buildpack: java_buildpack
-    path: target/predix-microservice-cf-spring-1.1.6.jar
-    memory: 512M
-    timeout : 180
-env:
-   SPRING_PROFILES_ACTIVE : cloud  
-   JAVA_DOCS_URL : https://predixdev.github.io/predix-microservice-cf-spring
+- name: falcon-spring
+  buildpack: https://github.com/afalak/java-buildpack.git
+  path: target/predix-microservice-cf-spring-1.1.7.jar
+  memory: 750M
+  stack: cflinuxfs2
+  env:
+    SPRING_PROFILES_ACTIVE : cloud  
+    JAVA_DOCS_URL : https://predixdev.github.io/predix-microservice-cf-spring
+    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+UseThreadPriorities -XX:+UseG1GC -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=1000 -XX:+UseCompressedOops -XX:+UseBiasedLocking -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -Djava.security.egd=file:///dev/urandom
+    SPRING_PROFILES_DEFAULT: cloud
+  services:
+    - falcon-mqtt-logs
